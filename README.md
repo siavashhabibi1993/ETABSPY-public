@@ -2,6 +2,8 @@
 
 A Python desktop application that automates the shear wall pier force extraction and S-CONCRETE file generation workflow for multi-story building structural analysis. Built to replace a tedious manual process — retrieving pier forces from ETABS, copying results into Excel, post-processing spreadsheets, and manually preparing S-CONCRETE input files — with a single, controlled, automated pipeline.
 
+![ETABSPY V2.0](.github/assets/Screenshot-1.png)
+
 ETABSPY connects directly to an analyzed ETABS model via COM API, extracts all required datasets (geometry, load cases, load combinations, pier forces, material properties), and generates ready-to-use `.sco` S-CONCRETE design files in seconds. Once data is retrieved, it can be saved as a `.pkl` snapshot and reloaded later without needing ETABS open — enabling a fully offline processing mode.
 
 Key engineering logic includes seismic shear force magnification (Rd application), where ETABSPY deconstructs each load combination into its individual load cases, applies the user-defined seismic magnification factor only to seismic shear components (V2, V3), then reconstructs the combination to produce the final magnified forces. It also computes moment distribution factors (Cm) and organizes output files by story grouping, with user control over how stories are batched into each S-CONCRETE file via the Pier Forces Viewer.
