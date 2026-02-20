@@ -1,0 +1,29 @@
+name: Sync README
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # every hour
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Fetch README from private repo
+        run: |
+          curl -H "Authorization: token ${{ secrets.PAT }}" \
+               -H "Accept: application/vnd.github.v3.raw" \
+               -o README.md \
+               https://api.github.com/repos/siavashhabibi1993/ETABSPY/contents/README.md
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add README.md
+          git diff --staged --quiet || git commit -m "Sync README from private repo"
+          git push
